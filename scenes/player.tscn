@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4gsvgasx3v8c"]
+[gd_scene load_steps=4 format=3 uid="uid://d4gsvgasx3v8c"]
 
 [ext_resource type="PackedScene" uid="uid://dwummo2wnrd4r" path="res://art/player.glb" id="1_alq5p"]
+[ext_resource type="Script" path="res://scripts/Player.cs" id="1_ua2kb"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ae2g8"]
 radius = 0.8
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+script = ExtResource("1_ua2kb")
 
 [node name="Pivot" type="Node3D" parent="."]
 

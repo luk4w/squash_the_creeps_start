@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cnyono68xx8bf"]
+[gd_scene load_steps=4 format=3 uid="uid://cnyono68xx8bf"]
+
+[ext_resource type="PackedScene" uid="uid://d4gsvgasx3v8c" path="res://scenes/player.tscn" id="1_w5sg4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pl3yq"]
 size = Vector3(60, 2, 60)
@@ -21,3 +23,13 @@ mesh = SubResource("BoxMesh_76lv2")
 transform = Transform3D(1, 0, 0, 0, -0.0124614, 0.999922, 0, -0.999922, -0.0124614, 0, 19.0435, 0)
 shadow_enabled = true
 shadow_normal_bias = 1.0
+
+[node name="Player" parent="." instance=ExtResource("1_w5sg4")]
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19)
+projection = 1
+size = 19.0
