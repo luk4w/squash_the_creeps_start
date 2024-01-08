@@ -3,6 +3,10 @@ using System;
 
 public partial class Mob : CharacterBody3D
 {
+
+    [Signal]
+    public delegate void SquashedEventHandler();
+
     [Export]
     public int MinSpeed { get; set; } = 10;
 
@@ -17,8 +21,10 @@ public partial class Mob : CharacterBody3D
     // Função que será chamada a partir de main.tscn
     public void Initialize(Vector3 startPosition, Vector3 playerPosition)
     {
+        // Evita que o mob olhe para a direção Y do jogador
+        var newPosition = new Vector3(playerPosition.X, startPosition.Y, playerPosition.Z);
         // Posiciona o mob na startPosition e rotacionan em direção a playerPosition, para que ele olhe para o jogador
-        LookAtFromPosition(startPosition, playerPosition, Vector3.Up);
+        LookAtFromPosition(startPosition, newPosition, Vector3.Up);
 
         // Rotaciona o mob aleatoriamente dentro de uma faixa de -45 e +45 graus para nao ir reto no jogador
         RotateY((float)GD.RandRange(-Mathf.Pi / 4.0, Mathf.Pi / 4.0));
@@ -36,4 +42,11 @@ public partial class Mob : CharacterBody3D
     {
         QueueFree();
     }
+
+    public void Squash()
+    {
+        EmitSignal(SignalName.Squashed);
+        QueueFree();
+    }
+
 }

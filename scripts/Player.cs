@@ -4,6 +4,9 @@ using System;
 public partial class Player : CharacterBody3D
 {
 	[Export]
+	public int BounceImpulse { get; set; } = 20;
+
+	[Export]
 	public int JumpImpulse { get; set; } = 20;
 
 	[Export]
@@ -51,7 +54,7 @@ public partial class Player : CharacterBody3D
 		_targetVelocity.Z = direction.Z * Speed;
 
 		// Se estiver no ar, aplicar um "efeito" de gravidade
-		if (!IsOnFloor()) 
+		if (!IsOnFloor())
 		{
 			_targetVelocity.Y -= FallAcceleration * (float)delta;
 		}
@@ -66,6 +69,28 @@ public partial class Player : CharacterBody3D
 		Velocity = _targetVelocity;
 		// Move o personagem suavemente (Se atingir uma parede no meio de um movimento, a engine tentará suavizar essa ação)
 		MoveAndSlide();
+
+
+		// Itera por todas as colisões que ocorreram neste frame
+		for (int index = 0; index < GetSlideCollisionCount(); index++)
+		{
+			// Obtem uma das colisões com o jogador.
+			KinematicCollision3D collision = GetSlideCollision(index);
+
+			// Verifica se a colisão foi com um inimigo
+			if (collision.GetCollider() is Mob mob)
+			{
+				// Verifica se atingiu o inimigo de cima
+				if (Vector3.Up.Dot(collision.GetNormal()) > 0.1f)
+				{
+					// Se sim, esmaga o inimigo e pula
+					mob.Squash();
+					_targetVelocity.Y = BounceImpulse;
+					// Evita chamadas duplicadas adicionais
+					break;
+				}
+			}
+		}
 
 	}
 

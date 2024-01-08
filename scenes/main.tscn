@@ -73,6 +73,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6538, 0, 15.0494)
 mesh = SubResource("CylinderMesh_57ie8")
 
 [node name="SpawnPath" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 curve = SubResource("Curve3D_5vfb6")
 
 [node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
